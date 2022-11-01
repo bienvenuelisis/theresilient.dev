@@ -21,8 +21,8 @@ const RESOURCES = {
 "assets/assets/parc-Nyungwe-paysage.jpg": "e7e415cbad639107f82cd6a57ae9c955",
 "assets/assets/zanzibar-hotel.jpg": "5503a5889c2dc5484ceec9a0d36255b6",
 "assets/FontManifest.json": "7aaf3996738086bbd796613e14ef9e45",
-"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1",
-"assets/NOTICES": "b361027843eebeabb628ba6ab83cb50e",
+"assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
+"assets/NOTICES": "954573899c8ebca6527eb8d599e61ac0",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/flutter_icons/fonts/AntDesign.ttf": "3a2ba31570920eeb9b1d217cabe58315",
 "assets/packages/flutter_icons/fonts/Entypo.ttf": "744ce60078c17d86006dd0edabcd59a7",
@@ -40,12 +40,14 @@ const RESOURCES = {
 "assets/packages/flutter_icons/fonts/SimpleLineIcons.ttf": "d2285965fe34b05465047401b8595dd0",
 "assets/packages/flutter_icons/fonts/weathericons.ttf": "4618f0de2a818e7ad3fe880e0b74d04a",
 "assets/packages/flutter_icons/fonts/Zocial.ttf": "5cdf883b18a5651a29a4d1ef276d2457",
-"canvaskit/canvaskit.js": "62b9906717d7215a6ff4cc24efbd1b5c",
-"canvaskit/canvaskit.wasm": "b179ba02b7a9f61ebc108f82c5a1ecdb",
-"canvaskit/profiling/canvaskit.js": "3783918f48ef691e230156c251169480",
-"canvaskit/profiling/canvaskit.wasm": "6d1b0fc1ec88c3110db88caa3393c580",
+"assets/shaders/ink_sparkle.frag": "30a085d835afe0f9d4a83b690a3e7e2c",
+"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
+"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62",
+"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
+"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
 "favicon.ico": "29b0ae727bd4404efec0754dc5c6db3a",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
+"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
 "icons/android-chrome-192x192.png": "645487e25c6986c0215a5ebc46fc519b",
 "icons/android-chrome-512x512.png": "ed71146386822131e602dc651be0bacb",
 "icons/apple-touch-icon.png": "2c9cf207e86f0a003701f204f5799e86",
@@ -57,9 +59,9 @@ const RESOURCES = {
 "icons/mstile-150x150.png": "080bd742a2283866b2f78d4db4eca18f",
 "icons/safari-pinned-tab.svg": "907c81985007cb9c712804cccee8b066",
 "icons/site.webmanifest": "7dfae214069a8f1696f5f896413a9d18",
-"index.html": "e0dd8e876747b4a5a92bcde155db7bd8",
-"/": "e0dd8e876747b4a5a92bcde155db7bd8",
-"main.dart.js": "0cefa9fcf1a924161413faa1477b60f4",
+"index.html": "3e6a036566a73857fbfbbf233dd406f1",
+"/": "3e6a036566a73857fbfbbf233dd406f1",
+"main.dart.js": "7cf3112393143b838af2634ad3c31582",
 "manifest.json": "60a34e3d9fdb6ba44a7c08a826453327",
 "version.json": "e887b1dd6b731ceb5ac02d452793b334"
 };
@@ -67,10 +69,8 @@ const RESOURCES = {
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = [
-  "/",
-"main.dart.js",
+  "main.dart.js",
 "index.html",
-"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -169,9 +169,11 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache.
+        // lazily populate the cache only if the resource was successfully fetched.
         return response || fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
           return response;
         });
       })
