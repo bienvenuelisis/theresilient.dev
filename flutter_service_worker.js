@@ -59,9 +59,9 @@ const RESOURCES = {
 "icons/mstile-150x150.png": "080bd742a2283866b2f78d4db4eca18f",
 "icons/safari-pinned-tab.svg": "907c81985007cb9c712804cccee8b066",
 "icons/site.webmanifest": "7dfae214069a8f1696f5f896413a9d18",
-"index.html": "3e6a036566a73857fbfbbf233dd406f1",
-"/": "3e6a036566a73857fbfbbf233dd406f1",
-"main.dart.js": "7cf3112393143b838af2634ad3c31582",
+"index.html": "db057d9ff692034b4fd15327f4566b8d",
+"/": "db057d9ff692034b4fd15327f4566b8d",
+"main.dart.js": "ad59883cfa8dcca747e57b96cfca4cd5",
 "manifest.json": "60a34e3d9fdb6ba44a7c08a826453327",
 "version.json": "e887b1dd6b731ceb5ac02d452793b334"
 };
